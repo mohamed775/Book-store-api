@@ -82,23 +82,22 @@ class CartController extends Controller
     public function transaction(Request $request)
     {
         $user = User::select('id')->where('token', $request->token)->first();
-        if (request('id') && request('resourcePath')) {
-            $payment_id=request('id');
-            $resourcePath=request('resourcePath');
-            if (isset($payment_id)) {
-                $showSuccessPaymentMessage = true;
-                Payment::create([
-                    'transation_id'=>$payment_id,
-                    'user_id'=> $user->id
-                ]);
-                Cart::where('user_id',$user->id)->delete();
-                return response()->json(['success' => 'Transaction Successfully']);
-            } else {
-                $showFailPaymentMessage = true;
-                return response()->json(['fail' => 'Transaction failed!']);
-            }
+        $payment_id = $request->input('id');
+        $resourcePath = $request->input('resourcePath');
+        if ($payment_id && $resourcePath) {
+            $showSuccessPaymentMessage = true;
+            Payment::create([
+                'transation_id'=>$payment_id,
+                'user_id'=> $user->id
+            ]);
+            Cart::where('user_id',$user->id)->delete();
+            return response()->json([
+                'success' => 'Transaction Successfully'
+            ]);
+        } else {
+            $showFailPaymentMessage = true;
+            return response()->json(['fail' => 'Transaction failed!']);
         }
-        return response()->json(['message' => 'Invalid request']);
     }
 
     

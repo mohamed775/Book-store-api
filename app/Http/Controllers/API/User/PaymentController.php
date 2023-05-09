@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function checkOut(Request $request){
+    public function buy(Request $request){
         $price=$request->amount;
            $url = "https://eu-test.oppwa.com/v1/checkouts";
            $data = "entityId=8a8294174b7ecb28014b9699220015ca" .
@@ -41,7 +41,7 @@ class PaymentController extends Controller
        }
 
 
-    //    public function storeTransaction(Request $request){
-    //        return $request;
-    //    }
+       public function storeTransaction(Request $request){
+           return $request;
+       }
 }
