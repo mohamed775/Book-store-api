@@ -13,31 +13,24 @@ class AuthAdminController extends Controller
 {
     public function login(Request $request)
     {
-       
-        $name = $request->name;
-        $email=$request->email;
-        $pass=Hash::make($request->password);
-        $admin= Admin::select()->where('name',$name)->where('email',$email)->where('password',$pass)->first();
-
-        if(!isset($admin)){
+        $credential = array('name' => $request->name,'email'=>$request->email,'password'=>$request->password);
+        if(isset($credential))
+        {
+            return response()->json([
+                'Token' => Admin::select('token')->first(),
+                'messsage'=>__('messages.Login'),
+                'code'=>200]
+                ,200);
+        }
+        else
+        {
             return response()->json([
                 'message'=>__('messages.Unauthorized'),
                 'code' => 201]
                 ,201);
-        }
-
-        $token = \Str::random(60);
-        Admin::where('email',$email)->update([
-            'Token'=>$token
-        ]);
-        // $admin=Admin::where('email',$email)->first();
-            return response()->json([
-                'Token'=>$admin->token,
-                'messsage'=>'has login',
-                'username'=>$admin->name,
-                'code'=>200]
-                ,200);
-        }
+        }   
+        
+    }
 
     // public function register(Request $request)
     // {

@@ -46,30 +46,6 @@ class AuthUserController extends Controller
                 'code' => 201]
                 ,201);
         }
-    //     $name = $request->name;
-    //     $email=$request->email;
-    //     $pass=Hash::make($request->password);
-    //     $users= User::select()->where('name',$name)->where('email',$email)->where('password',$pass)->first();
-    //     // return $clients;
-    //    if(!isset($users)){
-    //         return response()->json([
-    //             'message'=>__('messages.Unauthorized'),
-    //             'code' => 201]
-    //             ,201);
-    //     }
-
-    //     $token = \Str::random(60);
-    //     User::where('email',$email)->update([
-    //         'Token'=>$token
-    //     ]);
-    //     $user=User::where('email',$email)->first();
-    // return response()->json([
-    //     'Token'=>$token,
-    //     'messsage'=>__('messages.Login'),
-    //     'username'=>$user->name,
-    //     'code'=>200]
-    //     ,200);
     }
-
 
 }

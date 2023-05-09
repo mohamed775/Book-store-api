@@ -18,8 +18,8 @@ class Book extends Model
         return $this->belongsTo(Category::class ,'category_id');
     }
 
-    // public function Cart()
-    // {
-    //     return $this->belongsTo(Cart::class);
-    // }
+    public function Cart()
+    {
+        return $this->hasMany(Cart::class,'book_id');
+    }
 }

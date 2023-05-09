@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRulesRequest;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -19,14 +20,14 @@ class CategoryController extends Controller
             200);
     }
 
-    public function store(Request $request)
-    {
-        $validation = $this->validation();
-        
+    public function store(CategoryRulesRequest $request)
+    { 
+        // return $request;     
         $category = Category::create([
             'name'=>$request->name,
         ]);
 
+        
         return response()->json([
             $category,
             'message' => __('messages.Added'),
@@ -34,7 +35,7 @@ class CategoryController extends Controller
             200);       
     }
 
-    public function show($id)
+    public function showBooks($id)
     {
         $books=Book::select()->where('category_id',$id)->paginate(PAGINATION_COUNTER);
         return response()->json([
@@ -44,10 +45,8 @@ class CategoryController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(CategoryRulesRequest $request, $id)
     {
-        $validation = $this->validation();
-
         if($category=Category::find($id))
         {
             $category->update([
@@ -87,13 +86,6 @@ class CategoryController extends Controller
                 'code'=> 201],
                 201); 
         }
-    }
-
-    protected function validation()
-    {
-        $validation=[
-            'name'=>['required','Max:50']
-        ];
     }
 
 }

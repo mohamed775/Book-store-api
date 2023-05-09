@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookRulesRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -18,15 +19,9 @@ class BookController extends Controller
             200);
     }
 
-    public function store(Request $request)
+    public function store(BookRulesRequest $request)
     {
-        $validation = $this->validation();
-
-        $image = $request->file('image');
-        $file_extention = $image->getClientOriginalName();
-        $file_name = \Str::random(30) . $file_extention;
-        $path = 'images/books';
-        $image->move($path, $file_name);
+        $file_name = $this->getImage($request);
 
         $book = Book::create([
              'name'=>$request->name,
@@ -44,15 +39,9 @@ class BookController extends Controller
             200);       
     }
 
-    public function update(Request $request, $id)
+    public function update(BookRulesRequest $request, $id)
     {
-        $validation = $this->validation();
-        // $getImage = $this->getImage();
-        $image = $request->file('image');
-        $file_extention = $image->getClientOriginalName();
-        $file_name = \Str::random(30) . $file_extention;
-        $path = 'images/books';
-        $image->move($path, $file_name);
+        $file_name = $this->getImage($request);
         
         if($book=Book::find($id))
         {
@@ -100,24 +89,13 @@ class BookController extends Controller
         }
     }
 
-    protected function validation()
+    protected function getImage($request)
     {
-        $validation=[
-            'name'=>['required','Max:64'],
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'price' => 'required',
-            'author' =>['required','Max:64'],
-            'category_id' => 'required',
-        ];
+        $image = $request->file('image');
+        $file_extention = $image->getClientOriginalName();
+        $file_name = \Str::random(30) . $file_extention;
+        $path = 'images/books';
+        $image->move($path, $file_name);
+        return $file_name;
     }
-
-    // protected function getImage(Request $request)
-    // {
-    //     $image = $request->file('image');
-    //     $file_extention = $image->getClientOriginalName();
-    //     $file_name = \Str::random(30) . $file_extention;
-    //     $path = 'images/books';
-    //     $image->move($path, $file_name);
-    //     return $image;
-    // }
 }
