@@ -45,5 +45,7 @@ Route::middleware('UserAuth')->group(function(){
     Route::post('cart/store', [App\Http\Controllers\API\User\CartController::class, 'store']);
     Route::get('cart/show', [App\Http\Controllers\API\User\CartController::class, 'showCart']);
     Route::post('cart/cancel/{id}', [App\Http\Controllers\API\User\CartController::class, 'delete']);
-
+    Route::get('checkout',[App\Http\Controllers\API\User\PaymentController::class,'checkOut']);
+    Route::get('storeTransaction',[App\Http\Controllers\API\User\PaymentController::class,'storeTransaction']);
 });
+

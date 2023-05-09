@@ -31,20 +31,17 @@ class PaymentController extends Controller
            }
            curl_close($ch);
            // return $responseData;
-           $res=json_decode($responseData,true);
+           $response=json_decode($responseData,true);
            $book_id=$request->book_id;
-           // $view = view('ajax.form')->with(['responseData' => $res , 'id' => $request -> book_id]);
-
-        //    $view=view("ajax.form",compact('res','book_id'))->render();
 
            return response()->json([
                'status' => true,
-            //    'content'=>$view['main']
+               'content'=> $response
             ]);
        }
 
 
-       public function storeTransaction(Request $request){
-           return $request;
-       }
+    //    public function storeTransaction(Request $request){
+    //        return $request;
+    //    }
 }
