@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthUserController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthUserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->Token = \Str::random(32);
+        $user->Token = Str::random(32);
         $user->save();
 
         return response()->json([

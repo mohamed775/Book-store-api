@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRulesRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -93,7 +94,7 @@ class BookController extends Controller
     {
         $image = $request->file('image');
         $file_extention = $image->getClientOriginalName();
-        $file_name = \Str::random(30) . $file_extention;
+        $file_name = Str::random(30) . $file_extention;
         $path = 'images/books';
         $image->move($path, $file_name);
         return $file_name;
