@@ -19,6 +19,7 @@ define('PAGINATION_COUNTER',5);
 Route::post('admin/login', [App\Http\Controllers\API\Admin\AuthAdminController::class, 'login']);
 
 Route::middleware('AdminAuth')->group(function(){
+    
     Route::get('category/index', [App\Http\Controllers\API\Admin\CategoryController::class, 'index']);
     Route::get('category/show/{id}', [App\Http\Controllers\API\Admin\CategoryController::class, 'showBooks']);
     Route::post('category/update/{id}', [App\Http\Controllers\API\Admin\CategoryController::class, 'update']);
